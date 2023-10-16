@@ -1,0 +1,94 @@
+/* Add CSS animations to text */
+@keyframes textAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Home {
+  background-color: #1f2937;
+  height: 100vh;
+  background-repeat: no-repeat;
+  width: 100vw;
+}
+
+.Hero {
+  display: flex;
+  align-items: center;
+  margin-top: 70px;
+  justify-content: center;
+}
+
+.Hero_Image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  padding-right: 100px;
+  gap: 10px;
+}
+
+img {
+  width: 45%;
+  border: 5px solid #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Text animations and effects */
+.Hero_text {
+  font-size: 40px;
+  text-align: center;
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow */
+  animation: textAnimation 1s ease-in-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: color 0.3s ease; /* Add a color transition effect */
+}
+
+/* Apply animation to text */
+.animated-text {
+  animation: textAnimation 1s ease-in-out forwards;
+  opacity: 0;
+  transform: translateY(0);
+  color: #f5a623; /* Change text color on hover or animation */
+}
+
+/* Adjust the following styles for smaller screens (e.g., mobile) */
+@media (max-width: 768px) {
+  .Home {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Hero_Image {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    align-items: center;
+  }
+
+  .image {
+    width: 90vw;
+  }
+
+  .Hero_text {
+    width: 100vw;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 28px;
+  }
+}
