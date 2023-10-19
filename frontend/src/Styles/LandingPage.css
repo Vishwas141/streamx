@@ -1,6 +1,10 @@
-/* Default styles for larger screens */
 
-/* Add a gradient effect to the text */
+.create-event-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 .event_section_heading {
   color:white;
   font-size: 40px;
@@ -37,15 +41,21 @@
 
 /* Media query for screens with a maximum width of 500px (mobile) */
 @media (max-width: 500px) {
+    /* button */
+    .create-event-button {
+  position: absolute;
+  top:20px;
+  right: 30vw;
+  
+}
+
     .event_section {
         min-height: auto; /* Adjust the height for smaller screens */
     }
-    /* .poster_img {
-        width: 120%;
-        margin-left: 0; 
-    }
-*/
+    
     .description {
         margin-left: 0; /* Remove margin for smaller screens */
     }
 }
+
+
