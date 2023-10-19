@@ -1,6 +1,7 @@
 import "../Styles/LandingPage.css"
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { MdArrowForward } from "react-icons/md"
 
 const events = [
     {
@@ -75,6 +76,18 @@ const LandingPage = () => {
     const role = "Admin";
     return (
         <div className=" event_section">
+            <div className="mb-[70px]">
+                {
+                    role === "Admin" ? (
+
+                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  ">
+                            <p>Create Event </p> <MdArrowForward size={20}/>
+                        </button>
+                    ) : (
+                        <></>
+                    )
+                }
+            </div>
             <div className=" font-bold text-center gradient-text event_section_heading mt-5  text-white">
                 Upcoming Events
             </div>
