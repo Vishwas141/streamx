@@ -8,7 +8,7 @@ const EventForm = () => {
     registrationLink: '',
     registrationDate: '',
     closingDate: '',
-    venue: '',
+    venue: '',  
     organisation: '',
     modeOfConduction: '',
     errors: {},
@@ -61,7 +61,7 @@ const EventForm = () => {
   return (
     <div className="event-form-container">
       <div className="event-form">
-        <h1 className="text-[40px] font-semibold text-center">Event Registration Form</h1>
+        <h1 className="text-[40px] font-semibold text-center mb-7">Event Registration Form</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="eventName">Event Name *</label>

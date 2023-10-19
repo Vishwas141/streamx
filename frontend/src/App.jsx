@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, RouterProvider, Routes } from "react-router-dom";
 import AuthPage from "./Pages/AuthPage";
 import HomePage from "./Pages/HomePage";
-
+import LandingPage from "./Components/LandingPage"
+import { createBrowserRouter } from "react-router-dom";
 
 function App() {
+  const route = createBrowserRouter([
+    { path: "/", element: <AuthPage /> },
+    { path: "/home", element: <HomePage /> },
+    { path: "/events", element: <LandingPage /> }
+  ])
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<AuthPage />} />
-        <Route path="/Home" element={<HomePage />} />
-      </Routes>
-    </div>
+    <>
+      <RouterProvider router={route} />
+
+    </>
   );
 }
 

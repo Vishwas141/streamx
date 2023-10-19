@@ -39,7 +39,9 @@ label {
 
 /* Change the color of date field icons */
 .form-group input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1); /* Inverts color to match the theme */
+  filter: invert(2); /* Inverts color to match the theme */
+  margin-right: 20px;
+
 }
 
 input[type="text"],
@@ -47,6 +49,7 @@ input[type="date"],
 textarea {
   width: 100%;
   padding: 10px;
+
   border: 1px solid #333;
   border-radius: 5px;
   background-color: #2b2b2b; /* A dark gray for input fields */
