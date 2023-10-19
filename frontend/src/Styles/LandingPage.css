@@ -1,0 +1,51 @@
+/* Default styles for larger screens */
+
+/* Add a gradient effect to the text */
+.event_section_heading {
+  color:white;
+  font-size: 40px;
+  
+}
+
+
+.event_section {
+    width: 100vw;
+    min-height: auto;
+    background-color:#121212;
+    padding-bottom: 20px;
+}
+
+
+.event_section_events {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next row on smaller screens */
+    justify-content: center;
+    align-items: center;
+}
+
+/* .poster_img {
+    width: 100%;
+} */
+
+.description {
+    margin-left: 10px;
+}
+
+.knowMore {
+    margin-bottom: 10px;
+}
+
+/* Media query for screens with a maximum width of 500px (mobile) */
+@media (max-width: 500px) {
+    .event_section {
+        min-height: auto; /* Adjust the height for smaller screens */
+    }
+    /* .poster_img {
+        width: 120%;
+        margin-left: 0; 
+    }
+*/
+    .description {
+        margin-left: 0; /* Remove margin for smaller screens */
+    }
+}

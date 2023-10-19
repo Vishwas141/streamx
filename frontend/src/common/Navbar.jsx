@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../Styles/Navbar.css';
+import { Link } from 'react-router-dom';
 
 import { BiSolidUserCircle } from "react-icons/bi"
 
@@ -25,8 +26,12 @@ function Navbar() {
         <div className="brand-name">Streamers</div>
       </div>
       <div className="nav-links">
-        <div className='menu'>Events</div>
-        <div className='menu'>Meet</div>
+        <Link to="/create_event">
+          <div className='menu'>Events</div>
+        </Link>
+        <Link to="">
+          <div className='menu'>Meet</div>
+        </Link>
         <div className="user-section" onClick={userLoggedIn ? toggleLogoutMenu : handleLogin}>
           {userLoggedIn ? (
             <BiSolidUserCircle size={35}/>
