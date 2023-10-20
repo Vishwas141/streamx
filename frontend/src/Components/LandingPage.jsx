@@ -1,7 +1,8 @@
 import "../Styles/LandingPage.css"
-import React from "react";
+import React,{useEffect, useState} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md"
+import axios from "axios";
 
 const events = [
     {
@@ -71,16 +72,41 @@ const events = [
     },
 
 ]
-const LandingPage = () => {
+const LandingPage = () =>
+{
+    const navigate = useNavigate();
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:4000/api/v1/getevents");
+                setData(response.data.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const sendMail = async(event) =>
+    {
+        const message = await axios.post("http://localhost:4000/api/v1/sendmail", event);
+        console.log(message);
+    }
+
 
     const role = "Admin";
+
     return (
         <div className=" event_section">
             <div className="mb-[70px]">
                 {
                     role === "Admin" ? (
 
-                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  ">
+                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={()=>navigate("/registerevent")}>
                             <p>Create Event </p> <MdArrowForward size={20}/>
                         </button>
                     ) : (
@@ -95,7 +121,7 @@ const LandingPage = () => {
 
 
             <div className="flex flex-wrap  justify-center mt-2 event_section_events">
-                {events.map((event, i) => {
+                {data?.map((event, i) => {
                     return (
                         <div
                             key={i}
@@ -103,18 +129,19 @@ const LandingPage = () => {
                         >
                             <div className="mt-2">
                                 <img
-                                    src={event.poster_url}
+                                    src={event.posterImage
+}
                                     alt="Events dont have poster"
                                     className="w-[40em] h-[200px] rounded-[10px] poster_img"
                                 />
                             </div>
 
                             <div className="font-bold text-2xl gtext my-2 text-center">
-                                {event.event_name}
+                                {event.eventName}
                             </div>
                             <div>
                                 <p className="text-gray-100 text-sm mb-4 description">
-                                    {event.description.substring(0, 240) + " ..."}
+                                    {event.eventDescription.substring(0, 240) + " ..."}
                                 </p>
                             </div>
                             
@@ -140,7 +167,7 @@ const LandingPage = () => {
 
 
                         <div className="flex flex-wrap  justify-center mt-2 event_section_events">
-                            {events.map((event, i) => {
+                            {data.map((event, i) => {
                                 return (
                                     <div
                                         key={i}
@@ -148,27 +175,27 @@ const LandingPage = () => {
                                     >
                                         <div className="mt-2">
                                             <img
-                                                src={event.poster_url}
+                                                src={event.posterImage}
                                                 alt="Events dont have poster"
                                                 className="w-[40em] h-[200px] rounded-[10px] poster_img"
                                             />
                                         </div>
 
                                         <div className="font-bold text-2xl gtext my-2 text-center">
-                                            {event.event_name}
+                                            {event.eventName}
                                         </div>
                                         <div>
                                             <p className="text-gray-100 text-sm mb-4 description">
-                                                {event.description.substring(0, 240) + " ..."}
+                                                {event.eventDescription.substring(0, 240) + " ..."}
                                             </p>
                                         </div>
 
-                                        <Link
-                                            to={"https://www.techfusion2k23.in/"}
-                                            className="bg-[#288CEF]  h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer"
-                                        >
+                                        <div
+                                            onClick={() => { sendMail(event) }}
+                                            className="bg-[#288CEF]  h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer">
+                                        
                                             Send Notifications
-                                        </Link>
+                                        </div>
 
                                     </div>
                                 );

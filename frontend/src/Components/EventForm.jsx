@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import '../Styles/EventForm.css';
+import axios from "axios"
+import { useNavigate, Link } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
-const EventForm = () => {
+
+
+const EventForm = () =>
+{
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     eventName: '',
     eventDescription: '',
@@ -34,10 +43,26 @@ const EventForm = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (validateForm()) {
       console.log(formValues);
+      try {
+        const response = await axios.post("http://localhost:4000/api/v1/create_event", formValues, {
+          headers: {
+            'Content-Type': 'multipart/form-data', // Set the appropriate content type for file uploads
+          },
+        });
+
+        console.log(response.data); // Handle the response as needed
+        navigate("/events")
+
+        toast.success('Event created successfully');
+
+      } catch (error) {
+        toast.error('Error creating the event');
+        console.error('Error uploading the form:', error);
+      }
       console.log('Form submitted successfully');
     }
   };
@@ -60,6 +85,7 @@ const EventForm = () => {
 
   return (
     <div className="event-form-container">
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
       <div className="event-form">
         <h1 className="text-[40px] font-semibold text-center mb-7">Event Registration Form</h1>
         <form onSubmit={handleSubmit}>
@@ -89,6 +115,7 @@ const EventForm = () => {
             <input
               type="file"
               id="posterImage"
+              name="posterImage"
               accept=".jpeg, .jpg, .png"
               onChange={handlePosterImageChange}
             />

@@ -26,7 +26,7 @@ function Navbar() {
         <div className="brand-name">Streamers</div>
       </div>
       <div className="nav-links">
-        <Link to="/create_event">
+        <Link to="/events">
           <div className='menu'>Events</div>
         </Link>
         <Link to="">
