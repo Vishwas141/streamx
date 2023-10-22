@@ -45,7 +45,7 @@ exports.getAllEvent = async (req, res) =>
     {
        
         const Events= await Event.find({});
-        console.log(Events);
+
 
         return res.status(200).json({
             success: true,
@@ -64,13 +64,36 @@ exports.getAllEvent = async (req, res) =>
     }
 }
 
+
+// getting single detail of event
+
+exports.getSingleDetail = async (req, res) =>
+{
+    try
+    {
+        const eventId = req.params.id;
+        const event = await Event.findById({ _id: eventId });
+        
+        return res.status(200).json({
+            success: true,
+            data: event
+        })
+    }
+    catch (err)
+    {
+        return res.status(500).json({
+            success: false,
+            data:err.message,
+        });
+    }
+}
 //sending email to users of the website
 
 exports.sendEmail = async (req, res) =>
 {
     try
     {
-        let ids = ["satarkar424@gmail.com", "nalawadevishwas14@gmail.com", "nalawadevishwas96@gmail.com"];
+        let ids = ["satarkar424@gmail.com", "nalawadevishwas14@gmail.com", "saurabhsalunke91@gmail.com"];
       
         console.log(req.body.eventName);
         for (let i = 0; i < ids.length; i++)

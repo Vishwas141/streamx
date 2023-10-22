@@ -4,74 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md"
 import axios from "axios";
 
-const events = [
-    {
-        poster_url: "https://img.freepik.com/free-psd/digital-marketing-live-webinar-corporate-social-media-post-template_202595-415.jpg?size=626&ext=jpg",
-        event_name: "Techfusion 2k23",
-        description: "Coding event: A competitive hackathon where programmers collaborate to solve real-world problems, showcasing innovation, teamwork, and coding skills.",
-        registration_date: "21-10-2023",
-        closing_date: "27-10-2023",
-        mode: "online",
-        organiser: "Student's Association of Technology ,WCE Sangli",
-        contact_us: "9309320694",
-        official_gmail: "sait@gmail.com",
-        link: "https://www.facebook.com/"
-
-    },
-    {
-        poster_url: "https://img.freepik.com/free-psd/digital-marketing-live-webinar-corporate-social-media-post-template_202595-415.jpg?size=626&ext=jpg",
-        event_name: "Techfusion 2k23",
-        description: "Coding event: A competitive hackathon where programmers collaborate to solve real-world problems, showcasing innovation, teamwork, and coding skills.",
-        registration_date: "21-10-2023",
-        closing_date: "27-10-2023",
-        mode: "online",
-        organiser: "Student's Association of Technology ,WCE Sangli",
-        contact_us: "9309320694",
-        official_gmail: "sait@gmail.com",
-        link: "https://www.facebook.com/"
-
-    },
-    {
-        poster_url: "https://img.freepik.com/free-psd/digital-marketing-live-webinar-corporate-social-media-post-template_202595-415.jpg?size=626&ext=jpg",
-        event_name: "Techfusion 2k23",
-        description: "Coding event: A competitive hackathon where programmers collaborate to solve real-world problems, showcasing innovation, teamwork, and coding skills.",
-        registration_date: "21-10-2023",
-        closing_date: "27-10-2023",
-        mode: "online",
-        organiser: "Student's Association of Technology ,WCE Sangli",
-        contact_us: "9309320694",
-        official_gmail: "sait@gmail.com",
-        link: "https://www.facebook.com/"
-
-    },
-    {
-        poster_url: "https://img.freepik.com/free-psd/digital-marketing-live-webinar-corporate-social-media-post-template_202595-415.jpg?size=626&ext=jpg",
-        event_name: "Techfusion 2k23",
-        description: "Coding event: A competitive hackathon where programmers collaborate to solve real-world problems, showcasing innovation, teamwork, and coding skills.",
-        registration_date: "21-10-2023",
-        closing_date: "27-10-2023",
-        mode: "online",
-        organiser: "Student's Association of Technology ,WCE Sangli",
-        contact_us: "9309320694",
-        official_gmail: "sait@gmail.com",
-        link: "https://www.facebook.com/"
-
-    },
-    {
-        poster_url: "https://img.freepik.com/free-psd/digital-marketing-live-webinar-corporate-social-media-post-template_202595-415.jpg?size=626&ext=jpg",
-        event_name: "Techfusion 2k23",
-        description: "Coding event: A competitive hackathon where programmers collaborate to solve real-world problems, showcasing innovation, teamwork, and coding skills.",
-        registration_date: "21-10-2023",
-        closing_date: "27-10-2023",
-        mode: "online",
-        organiser: "Student's Association of Technology ,WCE Sangli",
-        contact_us: "9309320694",
-        official_gmail: "sait@gmail.com",
-        link: "https://www.facebook.com/"
-
-    },
-
-]
 const LandingPage = () =>
 {
     const navigate = useNavigate();
@@ -129,14 +61,13 @@ const LandingPage = () =>
                         >
                             <div className="mt-2">
                                 <img
-                                    src={event.posterImage
-}
+                                    src={event.posterImage}
                                     alt="Events dont have poster"
                                     className="w-[40em] h-[200px] rounded-[10px] poster_img"
+                                    style={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid #0e2032e5" }}
                                 />
                             </div>
-
-                            <div className="font-bold text-2xl gtext my-2 text-center">
+                            <div className="font-bold text-2xl gtext my-2 text-center text-white">
                                 {event.eventName}
                             </div>
                             <div>
@@ -146,7 +77,7 @@ const LandingPage = () =>
                             </div>
                             
                                 <Link
-                                    to={"https://www.techfusion2k23.in/"}
+                            to={`/eventdescription/${event._id}`}
                                     className="bg-[#288CEF] h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer"
                                 >
                                     Know More
@@ -178,6 +109,7 @@ const LandingPage = () =>
                                                 src={event.posterImage}
                                                 alt="Events dont have poster"
                                                 className="w-[40em] h-[200px] rounded-[10px] poster_img"
+                                                style={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", border: "1px solid #0e2032e5" }}
                                             />
                                         </div>
 
