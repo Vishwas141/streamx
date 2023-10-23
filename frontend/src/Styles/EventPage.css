@@ -1,102 +1,137 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.gtext {
-    background: linear-gradient(to bottom, #288CEF 30%, #288CEF 10%, #F2F6FA 10%, #FAFAFA 30%, #288CEF 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: white;
-    text-align: center;
-}
-
-.gtext2 {
-    background: linear-gradient(to bottom, #288CEF 30%, #288CEF 10%, #F2F6FA 10%, #FAFAFA 30%, #288CEF 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: black;
-    text-align: left;
-}
-
-.wtext {
+/* EventPage.css */
+.event-page {
+  background: #000;
   color: #fff;
-  font-weight: bold;
-  font-size: 2.2em;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
 }
 
-.wbox {
-  background-color: #d6d5d1;
-  color: #333;
+.event-name {
+  font-size: 48px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 20px;
+  font-weight: 600;
+  color: #f47a41; /* Text color */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow effect */
+  letter-spacing: 2px; /* Adjust letter spacing */
+  transition: transform 0.2s ease-in-out;
 }
 
-.pbox {
-  padding: 1.5rem;
+.event-name:hover {
+  transform: scale(1.1); /* Scale up on hover */
 }
 
-.c1 {
-  background-color: #d6d6d6;
-  color: #333;
+
+.poster-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 20px;
 }
 
-.backg {
-  background-color: black;
-}
+.poster-image {
+  width: 50%;
+  height: 500px;
+  border: 5px solid #fff;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
 
-.p-6 {
-  background-color: #cbcac8;
-}
-
-.maintext {
-  color: #29292e;
-}
-
-.winbox {
-  background-color: rgba(4, 27, 52, 0.6);
-}
-
-.contact {
-  background-color: #05274a;
-}
-
-@media (max-width: 500px) {
-  .backg {
-    background-color: black;
+  &:hover {
+    transform: scale(1.05);
   }
+}
 
-  .align_image_card {
-    width: 100%;
+.event-info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 350px; /* Adjust the width */
+  height: 450px; /* Adjust the height */
+  background: #222;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adjust the shadow properties */
+  padding: 20px;
+  border: 2px solid #fff; /* Add a border */
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.event-info-card:hover {
+  transform: scale(1.05); /* Hover effect to scale the card */
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;  /* Change this property */
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+
+.card-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.card-text {
+  font-size: 16px;
+}
+
+.event-description {
+  margin-top: 20px;
+}
+
+.footer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  padding-left: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  
+}
+.footer {
+  background: #333; /* Change this color to your desired background color */
+
+}
+
+.phone-icon, .email-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.contact, .email-icon {
+  display: flex;
+  align-items: center;
+}
+
+
+/* responsive */
+@media (max-width: 768px) 
+{
+  .poster-section
+  {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    font: 17px;
+    gap:40px;
   }
+  .poster-image
+  {
+    width:100%;
 
-  .image_description_org_div {
-    width: 100vw;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
   }
-
-  .event_detail_card {
-    width: 100vw;
-    height: 475px;
-    justify-content: center;
-    font: 17px;
-    background-color: #05274a;
-  }
-
-  .organizer_text {
-    padding-left: 10px;
-    padding-right: 10px;
-    font: 19px;
-  }
-
-  .contact_us_div {
+  .event-info-card
+  {
     width: 100%;
-    padding-left: 10px;
-    margin-left: 0px;
   }
 }

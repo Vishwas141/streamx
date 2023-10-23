@@ -5,6 +5,7 @@ import HomePage from "./Pages/HomePage";
 import LandingPage from "./Components/LandingPage"
 import { createBrowserRouter } from "react-router-dom";
 import EventForm from "../src/Components/EventForm";
+import EventPage from "../src/Pages/EventPage";
 
 function App() {
   const route = createBrowserRouter([
@@ -13,7 +14,10 @@ function App() {
     { path: "/events", element: <LandingPage /> },
     { 
       path:"/registerevent",element:<EventForm/>
-    }
+    },
+    {
+      path:"/eventdescription/:id",element:<EventPage/>
+    },
   ])
   return (
     <>
