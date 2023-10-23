@@ -3,7 +3,7 @@ import '../Styles/Auth.css';
 import { toast } from 'react-toastify'; // Import toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from "react-router-dom"
-
+import axios from "axios";
 function AuthPage() {
     const [isSignIn, setIsSignIn] = useState(true);
     const [signUpData, setSignUpData] = useState({
@@ -13,7 +13,7 @@ function AuthPage() {
         confirmPassword: '',
     });
     const [signInData, setSignInData] = useState({
-        username: '',
+        email: '',
         password: '',
     });
     const navigate = useNavigate();
@@ -24,8 +24,8 @@ function AuthPage() {
         }, 200);
     }, []);
 
-    const toggle = () => {
-        setIsSignIn(!isSignIn);
+    const toggle = (val) => {
+        setIsSignIn(val);
     };
 
     const handleSignUpChange = (e) => {
@@ -44,7 +44,7 @@ function AuthPage() {
         });
     };
 
-    const handleSignUpSubmit = (e) => {
+    const handleSignUpSubmit = async(e) => {
         e.preventDefault();
 
         // Check for empty fields
@@ -57,33 +57,69 @@ function AuthPage() {
             toast.error('Please fill in all fields');
             return;
         }
+        if(!signUpData.email.includes("@")){
+            toast.error('Please enter a valid email');
+            return;
+        }
+        if(signUpData.password.length < 8){
+            toast.error('Password should be atleast 8 characters');
+            return;
+        }
+        if(signUpData.password !== signUpData.confirmPassword){
+            toast.error('Password and Confirm Password should be same');
+            return;
+        }
 
         // Handle sign-up logic (replace this with your actual logic)
         console.log('Sign-up data:', signUpData);
 
+        try{
+            const res=await axios.post("http://localhost:4000/user/register",{name:signUpData.username,email:signUpData.email,password:signUpData.password});
+            if(!res.status===200){
+                throw new Error("Error while registering");
+            }
+            toast.success('Sign-up successful');
+            toggle(true);
+        }
+        catch(err){
+            toast.error(err.response.data.message);
+            return;
+        }
         // Show success toast
-        toast.success('Sign-up successful');
-
-         navigate("/Home");
     };
 
-    const handleSignInSubmit = (e) => {
+    const handleSignInSubmit = async (e) => {
         e.preventDefault();
 
         // Check for empty fields
-        if (!signInData.username || !signInData.password) {
+        if (!signInData.email || !signInData.password) {
             toast.error('Please fill in all fields');
             return;
         }
-
+        if(!signInData.email.includes("@")){
+            toast.error('Please enter a valid email');
+            return;
+        }
         // Handle sign-in logic (replace this with your actual logic)
         console.log('Sign-in data:', signInData);
-        
+        try{
+            const res=await axios.post("http://localhost:4000/user/login",{email:signInData.email,password:signInData.password});
+            localStorage.setItem("token",res.data.data);
+            if(!res.status===200){
+                throw new Error("Error while logging in");
+            }
+
+            toast.success('Sign-in successful');
+
+            navigate("/Home");
+        }
+        catch(err){
+            toast.error(err.response.data.message);
+            return;
+        }
         // Show success toast
-        toast.success('Sign-in successful');
 
         //navigating to Home page
-        navigate("/Home");
     };
 
     return (
@@ -135,9 +171,9 @@ function AuthPage() {
                                 />
                             </div>
                             <button type="submit">Sign up</button>
-                            <p>
+                            <p className="pit">
                                 <span>Already have an account?</span>
-                                <b onClick={toggle} className="pointer">
+                                <b onClick={()=>toggle(true)} className="pointer">
                                     Sign in here
                                 </b>
                             </p>
@@ -152,10 +188,10 @@ function AuthPage() {
                             <div className="input-group">
                                 <i className='bx bxs-user'></i>
                                 <input
-                                    type="text"
-                                    placeholder="Username"
-                                    name="username"
-                                    value={signInData.username}
+                                    type="email"
+                                    placeholder="Email"
+                                    name="email"
+                                    value={signInData.email}
                                     onChange={handleSignInChange}
                                 />
                             </div>
@@ -173,9 +209,9 @@ function AuthPage() {
                             {/* <p>
                                 <b>Forgot password?</b>
                             </p> */}
-                            <p>
+                            <p className="pit">
                                 <span>Don't have an account?</span>
-                                <b onClick={toggle} className="pointer">
+                                <b onClick={()=>toggle(false)} className="pointer">
                                     Sign up here
                                 </b>
                             </p>

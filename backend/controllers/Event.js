@@ -6,7 +6,7 @@ const MailSender = require("../common/MailSender");
 
 
 
-exports.createEvent = async (req, res) =>
+const createEvent = async (req, res) =>
 {
     try
     {
@@ -39,7 +39,7 @@ exports.createEvent = async (req, res) =>
 
 // GETTING ALL EVENTS FROM DATABASE
 
-exports.getAllEvent = async (req, res) =>
+const getAllEvent = async (req, res) =>
 {
     try
     {
@@ -66,7 +66,7 @@ exports.getAllEvent = async (req, res) =>
 
 //sending email to users of the website
 
-exports.sendEmail = async (req, res) =>
+const sendEmail = async (req, res) =>
 {
     try
     {
@@ -95,3 +95,5 @@ exports.sendEmail = async (req, res) =>
 
     }
 }
+
+module.exports = { createEvent, getAllEvent, sendEmail }

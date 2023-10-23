@@ -95,6 +95,7 @@ const EventForm = () =>
               type="text"
               id="eventName"
               value={formValues.eventName}
+              className='eventip'
               onChange={(e) => setFormValues({ ...formValues, eventName: e.target.value })}
             />
             {formValues.errors.eventName && <p className="error">{formValues.errors.eventName}</p>}
@@ -102,6 +103,7 @@ const EventForm = () =>
           <div className="form-group">
             <label htmlFor="eventDescription">Event Description *</label>
             <textarea
+              className='eventip'
               id="eventDescription"
               value={formValues.eventDescription}
               onChange={(e) => setFormValues({ ...formValues, eventDescription: e.target.value })}
@@ -113,6 +115,7 @@ const EventForm = () =>
           <div className="form-group">
             <label htmlFor="posterImage">Event Poster *</label>
             <input
+              className='eventip'
               type="file"
               id="posterImage"
               name="posterImage"
@@ -127,6 +130,7 @@ const EventForm = () =>
             <label htmlFor="registrationLink">Event Registration Link *</label>
             <input
               type="text"
+              className='eventip'
               id="registrationLink"
               value={formValues.registrationLink}
               onChange={(e) => setFormValues({ ...formValues, registrationLink: e.target.value })}
@@ -139,6 +143,7 @@ const EventForm = () =>
             <label htmlFor="registrationDate">Registration Date *</label>
             <input
               type="date"
+              className='eventip'
               id="registrationDate"
               value={formValues.registrationDate}
               onChange={(e) => setFormValues({ ...formValues, registrationDate: e.target.value })}
@@ -151,6 +156,7 @@ const EventForm = () =>
             <label htmlFor="closingDate">Closing Date *</label>
             <input
               type="date"
+              className='eventip'
               id="closingDate"
               value={formValues.closingDate}
               onChange={(e) => setFormValues({ ...formValues, closingDate: e.target.value })}
@@ -164,6 +170,7 @@ const EventForm = () =>
             <input
               type="text"
               id="venue"
+              className='eventip'
               value={formValues.venue}
               onChange={(e) => setFormValues({ ...formValues, venue: e.target.value })}
             />
@@ -174,6 +181,7 @@ const EventForm = () =>
             <input
               type="text"
               id="organisation"
+              className='eventip'
               value={formValues.organisation}
               onChange={(e) => setFormValues({ ...formValues, organisation: e.target.value })}
             />
@@ -187,6 +195,7 @@ const EventForm = () =>
             <input
               type="text"
               id="modeOfConduction"
+              className='eventip'
               value={formValues.modeOfConduction}
               onChange={(e) => setFormValues({ ...formValues, modeOfConduction: e.target.value })}
             />

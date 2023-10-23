@@ -1,9 +1,13 @@
 const express = require("express");
 const app = express();
 const eventRoutes = require("./routes/Event");
-const database = require("./config/database");
+const cors = require("cors");
+const router=require('./routes/AuthRoute')
+require("dotenv").config();
 const fileUpload = require("express-fileupload");
 const { cloudinaryConnect } = require("./config/cloudinary");
+const PORT = process.env.PORT || 4000;
+
 app.use(
 	fileUpload({
 		useTempFiles:true,
@@ -13,28 +17,17 @@ app.use(
 //cloudinary connection
 cloudinaryConnect();
 
-
-
-const cors = require("cors");
-
-const dotenv = require("dotenv");
-
-dotenv.config();
-const PORT = process.env.PORT || 4000;
-
-//database connect
-database.connect();
 //middlewares
 app.use(express.json());
 
 app.use(
 	cors({
-		origin:"http://localhost:5173",
+		origin:process.env.REACT_APP_BASE_URL,
 		credentials:true,
 	})
 )
 
-
+app.use("/user",router)
 app.use("/api/v1",eventRoutes);
 
 

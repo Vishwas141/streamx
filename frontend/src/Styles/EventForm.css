@@ -44,17 +44,15 @@ label {
 
 }
 
-input[type="text"],
-input[type="date"],
-textarea {
+.eventip{
   width: 100%;
   padding: 10px;
 
   border: 1px solid #333;
   border-radius: 5px;
-  background-color: #2b2b2b; /* A dark gray for input fields */
+  background-color: #2b2b2b; 
   color: #fff;
-}
+} 
 
 button[type="submit"] {
   background-color: #4a90e2; /* A shade of blue for the submit button */
