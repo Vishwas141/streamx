@@ -67,7 +67,7 @@ const getAllEvent = async (req, res) =>
 
 // getting single detail of event
 
-exports.getSingleDetail = async (req, res) =>
+const getSingleDetail = async (req, res) =>
 {
     try
     {
@@ -119,4 +119,4 @@ const sendEmail = async (req, res) =>
     }
 }
 
-module.exports = { createEvent, getAllEvent, sendEmail }
+module.exports = { createEvent, getAllEvent, sendEmail,getSingleDetail}
