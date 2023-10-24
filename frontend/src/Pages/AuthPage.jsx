@@ -105,13 +105,14 @@ function AuthPage() {
         try{
             const res=await axios.post("http://localhost:4000/user/login",{email:signInData.email,password:signInData.password});
             localStorage.setItem("token",res.data.data);
+            localStorage.setItem("email",signInData.email)
             if(!res.status===200){
                 throw new Error("Error while logging in");
             }
 
             toast.success('Sign-in successful');
 
-            navigate("/Home");
+            navigate("/");
         }
         catch(err){
             toast.error(err.response.data.message);

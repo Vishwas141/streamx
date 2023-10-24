@@ -38,7 +38,7 @@ const LandingPage = () =>
                 {
                     role === "Admin" ? (
 
-                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={()=>navigate("/registerevent")}>
+                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={()=>navigate("create")}>
                             <p>Create Event </p> <MdArrowForward size={20}/>
                         </button>
                     ) : (

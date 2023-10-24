@@ -56,14 +56,16 @@
 }
 
 .register-button {
-  background-color: #ea580c; 
+  background-color: #3f6ff3; 
   color: #ecf0f1; 
   border: none;
   width:150px;
-
-  padding: 10px 20px;
+  height: 40px;
   border-radius: 10px;
   cursor: pointer;
+}
+.register-button:hover{
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {

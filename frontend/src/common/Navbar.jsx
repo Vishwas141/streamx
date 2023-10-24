@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/Navbar.css';
 import { Link } from 'react-router-dom';
 
@@ -6,8 +6,14 @@ import { BiSolidUserCircle } from "react-icons/bi"
 
 function Navbar() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-  const [showLogoutMenu, setShowLogoutMenu] = useState(false);
-
+  // const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+  // const [showLoginMenu, setShowLoginMenu] = useState(false);
+  // useEffect(() => {
+  //   const loggedInUser = localStorage.getItem('user');
+  //   if (loggedInUser) {
+  //     setUserLoggedIn(!showLogoutMenu);
+  //   }
+  // }, [showLogoutMenu]);
   const handleLogin = () => {
     setUserLoggedIn(true);
   };
@@ -19,7 +25,10 @@ function Navbar() {
   const toggleLogoutMenu = () => {
     setShowLogoutMenu(!showLogoutMenu);
   };
-
+  // const logout=()=>{
+  //   localStorage.removeItem("user");
+  //   handleLogout();
+  // }
   return (
     <div className="navbar">
       <div className="brand">

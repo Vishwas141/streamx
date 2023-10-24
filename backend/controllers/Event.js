@@ -119,4 +119,4 @@ const sendEmail = async (req, res) =>
     }
 }
 
-module.exports = { createEvent, getAllEvent, sendEmail,getSingleDetail}
+module.exports = { createEvent, getAllEvent, sendEmail, getSingleDetail}
