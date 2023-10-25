@@ -1,55 +1,70 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/Navbar.css';
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'; // Import toast from react-toastify
+import { FiLogOut } from "react-icons/fi"
 
 import { BiSolidUserCircle } from "react-icons/bi"
 
-function Navbar() {
+function Navbar()
+{
+  //to check user is logged in or not 
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-  // const [showLogoutMenu, setShowLogoutMenu] = useState(false);
-  // const [showLoginMenu, setShowLoginMenu] = useState(false);
-  // useEffect(() => {
-  //   const loggedInUser = localStorage.getItem('user');
-  //   if (loggedInUser) {
-  //     setUserLoggedIn(!showLogoutMenu);
-  //   }
-  // }, [showLogoutMenu]);
-  const handleLogin = () => {
-    setUserLoggedIn(true);
-  };
 
-  const handleLogout = () => {
+  //store the userData 
+  const [userData, setUserData] = useState(null);
+
+
+
+  useEffect(() =>
+  {
+    const check = async () => {
+      const res = await axios.get("http://localhost:4000/user/validate", { withCredentials: true });
+      console.log("res", res);
+      setUserLoggedIn(res.data.success);
+      setUserData(res.data);
+    }
+    check();
+      
+  }, []);
+
+
+  const navigate = useNavigate();
+
+ //when we click on logout this function get called
+  const handleLogout = () =>
+  {
+    navigate("/auth");
     setUserLoggedIn(false);
   };
 
-  const toggleLogoutMenu = () => {
-    setShowLogoutMenu(!showLogoutMenu);
-  };
-  // const logout=()=>{
-  //   localStorage.removeItem("user");
-  //   handleLogout();
-  // }
+
   return (
     <div className="navbar">
       <div className="brand">
         <div className="brand-name">STREAMX</div>
       </div>
       <div className="nav-links">
-        <Link to="/events">
+        <Link to={(userLoggedIn) ? "/events" : "/auth"}>
           <div className='menu'>Events</div>
         </Link>
-        <Link to="">
+        <Link to={(userLoggedIn) ? "/" : "/auth"}>
           <div className='menu'>Meet</div>
         </Link>
-        <div className="user-section" onClick={userLoggedIn ? toggleLogoutMenu : handleLogin}>
+        <div className="user-section">
           {userLoggedIn ? (
-            <BiSolidUserCircle size={35}/>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
+              <BiSolidUserCircle color='white' onClick={() => { navigate('/') }} size={30} />
+              <button style={{ cursor: "pointer" }} onClick={handleLogout}>
+                <FiLogOut color="white" size={30} />
+              </button>
+            </div>
           ) : (
-            <button className="register-button">
+            <button className="register-button" onClick={() => navigate("/auth")}>
               Register
             </button>
           )}
-         
         </div>
       </div>
     </div>

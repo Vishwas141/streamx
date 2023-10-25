@@ -79,4 +79,40 @@ catch(err){
 }
 }
 
-module.exports = {Register,Login}
+
+
+// to check whether the user is authenticated
+
+
+const Validate = async (req,res) =>
+{
+    try
+    {
+      const token = req.cookies.token;
+      console.log("token", token);
+        if (!token)
+        {
+            return res.status(404).json({
+                success: false,
+                message:"User Not Found"
+           })
+        }
+        const decode =jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+        console.log(decode);
+
+
+        return res.status(200).json({
+            success: true,
+            data:decode
+        })
+    }
+    catch (err)
+    {
+        return res.status(500).json({
+            success: false,
+            message:"Credentials could not be decoded"
+        })
+    }
+}
+
+module.exports = { Register, Login ,Validate};
