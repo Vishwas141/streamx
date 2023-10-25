@@ -33,33 +33,61 @@ const Register = async (req, res) => {
 
 //login user and make use of jwt
 const Login = async (req, res) => {
-    const data=req.body;
-    const user=await userModel.find({email:data.email});
-    console.log(user);
-    if(!user){
-        return res.status(400).json({
-            success:false,
-            message:'User not found'
-        })
-    }
+    // const data=req.body;
+    // const user=await userModel.find({email:data.email});
+    // console.log(user);
+    // if(!user){
+    //     return res.status(400).json({
+    //         success:false,
+    //         message:'User not found'
+    //     })
+    // }
+    // try{
+    //     console.log(data.password,user[0].password);
+    // bcrypt.compare(data.password,user[0].password,async (err,isMatch)=>{
+    //     if(isMatch){
+    //         const token=jwt.sign({
+    //             name:user[0].name,
+    //             email:user[0].email,
+    //             id:user[0]._id,
+    //         },process.env.JWT_SECRET,{
+    //             expiresIn:'7d',
+    //         })
+    //         res.cookie('token',token,{
+    //             httpOnly:true,
+    //             secure:true,
+    //         })
+    //         return res.status(200).json({
+    //             success:true,
+    //             message:'User logged in successfully',
+    //             data:token,
+    //         })
+    //     }
+    //     else{
+    //         return res.status(400).json({
+    //             success:false,
+    //             message:'Incorrect password'
+    //         })
+    //     }
+    // })
     try{
-        console.log(data.password,user[0].password);
-    bcrypt.compare(data.password,user[0].password,async (err,isMatch)=>{
-        if(isMatch){
+    const currentUser=userModel.findOne({email:req.body.email});
+    if(currentUser){
+        const validatePassword=bcrypt.compareSync(req.body.password,currentUser.password);
+        if(validatePassword){
             const token=jwt.sign({
-                name:user[0].name,
-                email:user[0].email,
-                id:user[0]._id,
+                name:currentUser.name,
+                email:currentUser.email,
+                id:currentUser._id,
             },process.env.JWT_SECRET,{
-                expiresIn:'7d',
+                expiresIn:60*60*24*7,
             })
             res.cookie('token',token,{
-                httpOnly:true,
-                secure:true,
+                httpOnly:false,
             })
             return res.status(200).json({
                 success:true,
-                message:'User logged in successfully',
+                message:'Successfully logged in',
                 data:token,
             })
         }
@@ -69,7 +97,7 @@ const Login = async (req, res) => {
                 message:'Incorrect password'
             })
         }
-    })
+    }
 }
 catch(err){
     return res.status(500).json({
