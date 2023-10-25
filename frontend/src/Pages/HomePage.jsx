@@ -1,30 +1,45 @@
-import React from "react";
+import React,{useEffect,useRef} from "react";
 import Navbar from "../common/Navbar";
+import lottie from "lottie-web";
 import "../Styles/HomePage.css";
 
 
 const HomePage = () => {
+  const animationRef = useRef(null);
+
+  useEffect(() => {
+    // Load and initialize the Lottie animation
+    const animation = lottie.loadAnimation({
+      container: animationRef.current,
+      renderer: "svg", // Choose the appropriate renderer (svg, canvas, html)
+      loop: true,
+      autoplay: true,
+      path: "https://lottie.host/fad3f366-5539-4230-92ac-59a5cf02bc0e/v0bamhG8v9.json", // Replace with your animation's JSON file
+    });
+
+    // Optionally, you can control the animation properties here
+
+    return () => {
+      // Cleanup or stop the animation if needed when the component unmounts
+      animation.destroy();
+    };
+  }, []);
   return (
+    
     <div className="Home">
       <Navbar />
       <div className="Hero">
-        <div className="Hero_Image">
-          <img
-            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bWVldHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            className="image"
-          />
+        <div className="Hero_Image"  ref= {animationRef}   style={{ width: "900px", height: "900px"}}>
+          </div>
           <div className="Hero_text">
-            <span className="animated-text">
-              Your Gateway To
-            </span>
-            <span className="animated-text">
-              Endless Streaming and Event Publicity
-            </span>
+         
+            <p className="text">Your Gateway To</p>
+            <p className="text">Endless Streaming and Event Publicity</p>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
 export default HomePage;
+

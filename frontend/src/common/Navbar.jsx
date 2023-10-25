@@ -32,7 +32,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="brand">
-        <div className="brand-name">Streamers</div>
+        <div className="brand-name">STREAMX</div>
       </div>
       <div className="nav-links">
         <Link to="/events">
