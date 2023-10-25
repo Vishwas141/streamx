@@ -70,41 +70,36 @@ const Login = async (req, res) => {
     //         })
     //     }
     // })
-    try{
-    const currentUser=userModel.findOne({email:req.body.email});
-    if(currentUser){
-        const validatePassword=bcrypt.compareSync(req.body.password,currentUser.password);
-        if(validatePassword){
-            const token=jwt.sign({
-                name:currentUser.name,
-                email:currentUser.email,
-                id:currentUser._id,
-            },process.env.JWT_SECRET,{
-                expiresIn:60*60*24*7,
-            })
-            res.cookie('token',token,{
-                httpOnly:false,
-            })
-            return res.status(200).json({
-                success:true,
-                message:'Successfully logged in',
-                data:token,
-            })
+    try {   
+        const currentUser = await userModel.findOne({ email: req.body.email });
+        console.log(currentUser);
+        if (currentUser) {
+            const isPasswordCorrect = bcrypt.compareSync(
+                req.body.password,
+                currentUser.password
+            );
+            if (isPasswordCorrect) {
+                const token = jwt.sign(
+                    { id: currentUser._id },
+                    process.env.JWT_SECRET,
+                );
+                res.cookie('jwt', token, {
+                    withCredentials: true,
+                    httpOnly: false,
+                    maxAge: 24 * 60 * 60 * 1000
+                  });
+                res.status(200).json({ message: "User Logged In", token });
+            } else {
+                res.status(400).json({ message: "Password is Incorrect" });
+            }
         }
-        else{
-            return res.status(400).json({
-                success:false,
-                message:'Incorrect password'
-            })
+        else {
+            res.status(400).json({ message: "User not found" });
         }
     }
-}
-catch(err){
-    return res.status(500).json({
-        success:false,
-        message:err.message
-    })
-}
+    catch (err) {
+        res.status(400).json({ message:"server error" });
+    }
 }
 
 
