@@ -6,7 +6,8 @@ import LandingPage from "./Components/LandingPage"
 import { createBrowserRouter } from "react-router-dom";
 import EventForm from "../src/Components/EventForm";
 import EventPage from "../src/Pages/EventPage";
-
+import {EuiProvider} from "@elastic/eui"
+import "@elastic/eui/dist/eui_theme_light.css"
 function App() {
   const route = createBrowserRouter([
     { path: "/auth", element: <AuthPage /> },
@@ -18,10 +19,10 @@ function App() {
     ]}
     ])
   return (
-    <>
+    <EuiProvider>
       <RouterProvider router={route} />
 
-    </>
+    </EuiProvider>
   );
 }
 

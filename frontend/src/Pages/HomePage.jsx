@@ -1,12 +1,17 @@
-import React,{useEffect,useRef} from "react";
+import React,{useEffect,useRef,useState} from "react";
 import Navbar from "../common/Navbar";
 import lottie from "lottie-web";
 import "../Styles/HomePage.css";
-
+import axios from "axios";
+import {useNavigate} from "react-router-dom"
 
 const HomePage = () => {
   const animationRef = useRef(null);
-
+  const navigate = useNavigate();
+  const [session, setSession] = useState(false);
+    setInterval(() => {
+      setSession(!session);
+    }, 5000);
   useEffect(() => {
     // Load and initialize the Lottie animation
     const animation = lottie.loadAnimation({
@@ -24,6 +29,18 @@ const HomePage = () => {
       animation.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    const res=axios.get("http://localhost:4000/user/validate",{withCredentials:true})
+    res
+      .then((res) => {
+        // console.log(res.data)
+      })
+      .catch((err) => {
+        // console.log(err);
+        navigate("/auth");
+      });
+  }, [session]);
   return (
     
     <div className="Home">

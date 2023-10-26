@@ -33,43 +33,6 @@ const Register = async (req, res) => {
 
 //login user and make use of jwt
 const Login = async (req, res) => {
-    // const data=req.body;
-    // const user=await userModel.find({email:data.email});
-    // console.log(user);
-    // if(!user){
-    //     return res.status(400).json({
-    //         success:false,
-    //         message:'User not found'
-    //     })
-    // }
-    // try{
-    //     console.log(data.password,user[0].password);
-    // bcrypt.compare(data.password,user[0].password,async (err,isMatch)=>{
-    //     if(isMatch){
-    //         const token=jwt.sign({
-    //             name:user[0].name,
-    //             email:user[0].email,
-    //             id:user[0]._id,
-    //         },process.env.JWT_SECRET,{
-    //             expiresIn:'7d',
-    //         })
-    //         res.cookie('token',token,{
-    //             httpOnly:true,
-    //             secure:true,
-    //         })
-    //         return res.status(200).json({
-    //             success:true,
-    //             message:'User logged in successfully',
-    //             data:token,
-    //         })
-    //     }
-    //     else{
-    //         return res.status(400).json({
-    //             success:false,
-    //             message:'Incorrect password'
-    //         })
-    //     }
-    // })
     try {   
         const currentUser = await userModel.findOne({ email: req.body.email });
         console.log(currentUser);
@@ -83,7 +46,7 @@ const Login = async (req, res) => {
                     { id: currentUser._id },
                     process.env.JWT_SECRET,
                 );
-                res.cookie('jwt', token, {
+                res.cookie('token', token, {
                     withCredentials: true,
                     httpOnly: false,
                     maxAge: 24 * 60 * 60 * 1000
@@ -109,32 +72,22 @@ const Login = async (req, res) => {
 
 const Validate = async (req,res) =>
 {
-    try
-    {
-      const token = req.cookies.token;
-      console.log("token", token);
-        if (!token)
-        {
-            return res.status(404).json({
-                success: false,
-                message:"User Not Found"
-           })
+    try {
+        const token = req.cookies.token;
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const currentUser = await userModel.findById(payload.id);
+        // console.log("validate",currentUser);
+        if (!currentUser) {
+            const err = new Error("User not found");
+            err.status = 400;
+            throw err;
         }
-        const decode =jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-        console.log(decode);
-
-
-        return res.status(200).json({
-            success: true,
-            data:decode
-        })
-    }
-    catch (err)
-    {
-        return res.status(500).json({
-            success: false,
-            message:"Credentials could not be decoded"
-        })
+        else {
+        // req.currentUser = currentUser;
+        res.status(200).json({message:"Valid User"})
+        }
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
 }
 

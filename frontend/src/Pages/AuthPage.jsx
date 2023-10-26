@@ -74,7 +74,7 @@ function AuthPage() {
         console.log('Sign-up data:', signUpData);
 
         try{
-            const res=await axios.post("http://localhost:4000/user/register",{name:signUpData.username,email:signUpData.email,password:signUpData.password});
+            const res=await axios.post("http://localhost:4000/user/register",{name:signUpData.username,email:signUpData.email,password:signUpData.password},{withCredentials:true});
             if(!res.status===200){
                 throw new Error("Error while registering");
             }
@@ -103,8 +103,8 @@ function AuthPage() {
         // Handle sign-in logic (replace this with your actual logic)
         console.log('Sign-in data:', signInData);
         try{
-            const res=await axios.post("http://localhost:4000/user/login",{email:signInData.email,password:signInData.password});
-            localStorage.setItem("token",res.data.data);
+            const res=await axios.post("http://localhost:4000/user/login",{email:signInData.email,password:signInData.password},{withCredentials:true});
+            console.log(res.data)
             localStorage.setItem("email",signInData.email)
             if(!res.status===200){
                 throw new Error("Error while logging in");
@@ -228,7 +228,7 @@ function AuthPage() {
                 {/* SIGN IN CONTENT */}
                 <div className="col align-items-center flex-col">
                     <div className="text sign-in">
-                        <h2>Welcome</h2>
+                        <h2 style={{overflow:"hidden"}}>Welcome</h2>
                     </div>
                     <div className="img sign-in"></div>
                 </div>
@@ -237,7 +237,7 @@ function AuthPage() {
                 <div className="col align-items-center flex-col">
                     <div className="img sign-up"></div>
                     <div className="text sign-up">
-                        <h2>Join with us</h2>
+                        <h2 style={{overflow:"hidden"}}>Join with us</h2>
                     </div>
                 </div>
                 {/* END SIGN UP CONTENT */}

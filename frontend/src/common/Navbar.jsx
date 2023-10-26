@@ -17,9 +17,9 @@ function Navbar() {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('email');
-    cookies.remove('jwt');
+    cookies.remove("token");
     setUserLoggedIn(false);
-    navigate('/auth');
+    // navigate('/auth');
   };
   return (
     <div className="navbar">
