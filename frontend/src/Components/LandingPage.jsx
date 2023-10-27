@@ -1,16 +1,16 @@
 import "../Styles/LandingPage.css"
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md"
 import axios from "axios";
 
-const LandingPage = () =>
-{
+const LandingPage = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
+    const [events, setevents] = useState([]);
 
     useEffect(() => {
-        
+
         const fetchData = async () => {
             try {
                 const response = await axios.get("http://localhost:4000/api/v1/getevents");
@@ -22,9 +22,23 @@ const LandingPage = () =>
 
         fetchData();
     }, []);
+    useEffect(() => {
 
-    const sendMail = async(event) =>
-    {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:4000/api/v1/getAdmin", { withCredentials: true });
+                console.log("response", response);
+                setevents(response.data.data);
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const sendMail = async (event) => {
         const message = await axios.post("http://localhost:4000/api/v1/sendmail", event);
         console.log(message);
     }
@@ -38,8 +52,8 @@ const LandingPage = () =>
                 {
                     role === "Admin" ? (
 
-                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={()=>navigate("create")}>
-                            <p>Create Event </p> <MdArrowForward size={20}/>
+                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={() => navigate("create")}>
+                            <p>Create Event </p> <MdArrowForward size={20} />
                         </button>
                     ) : (
                         <></>
@@ -75,14 +89,14 @@ const LandingPage = () =>
                                     {event.eventDescription.substring(0, 240) + " ..."}
                                 </p>
                             </div>
-                            
-                                <Link
-                            to={`/eventdescription/${event._id}`}
-                                    className="bg-[#288CEF] h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer"
-                                >
-                                    Know More
-                                </Link>
-                            
+
+                            <Link
+                                to={`/eventdescription/${event._id}`}
+                                className="bg-[#288CEF] h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer"
+                            >
+                                Know More
+                            </Link>
+
                         </div>
                     );
                 })}
@@ -98,7 +112,7 @@ const LandingPage = () =>
 
 
                         <div className="flex flex-wrap  justify-center mt-2 event_section_events">
-                            {data.map((event, i) => {
+                            {events && events?.map((event, i) => {
                                 return (
                                     <div
                                         key={i}
@@ -125,7 +139,7 @@ const LandingPage = () =>
                                         <div
                                             onClick={() => { sendMail(event) }}
                                             className="bg-[#288CEF]  h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer">
-                                        
+
                                             Send Notifications
                                         </div>
 
@@ -134,14 +148,14 @@ const LandingPage = () =>
                             })}
                         </div>
                     </>
-          
-            
-            ):(
-                        <>
-                           
-                        </>
+
+
+                ) : (
+                    <>
+
+                    </>
                 )
-            
+
             }
         </div>
     );
