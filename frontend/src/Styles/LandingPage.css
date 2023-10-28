@@ -1,9 +1,9 @@
 
-.create-event-button {
+/* .create-event-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
-}
+  margin-top: 20px;
+  right: 30px;
+} */
 
 .event_section_heading {
   color:white;
@@ -14,9 +14,9 @@
 
 .event_section {
     width: 100vw;
+    height: 100vh;
     min-height: auto;
-    background-color:#121212;
-    padding-bottom: 20px;
+    background: radial-gradient(circle, #191F6B, black);    padding-bottom: 20px;
 }
 
 
@@ -42,12 +42,14 @@
 /* Media query for screens with a maximum width of 500px (mobile) */
 @media (max-width: 500px) {
     /* button */
-    .create-event-button {
-  position: absolute;
-  top:20px;
-  right: 30vw;
+    /* .create-event-button {
+    position: absolute;
+   
+   
+   
+   
   
-}
+} */
 
     .event_section {
         min-height: auto; /* Adjust the height for smaller screens */

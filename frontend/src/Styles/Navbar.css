@@ -33,7 +33,7 @@
   margin-right: 60px;
   margin-top: 20px;
   font-size: 25px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
   color: black;
 }
 
@@ -43,7 +43,7 @@
   margin-top: 3px;
   cursor: pointer;
   font-weight:600;
-  font-family: 'Uni Sans Demo', sans-serif;
+  /* font-family: 'Uni Sans Demo', sans-serif; */
   
 }
 

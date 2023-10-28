@@ -5,6 +5,7 @@ import { MdArrowForward } from "react-icons/md"
 import { FaEdit } from "react-icons/fa"
 import { AiOutlineDelete } from "react-icons/ai"
 import axios from "axios";
+import Navbar from "../common/Navbar";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -79,7 +80,8 @@ const LandingPage = () => {
     return (
         <div className=" event_section min-h-[100vh]">
             <div className="mb-[70px]">
-                {
+                <Navbar/>
+                {/* {
                     role === "Admin" ? (
 
                         <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={() => navigate("create")}>
@@ -88,7 +90,7 @@ const LandingPage = () => {
                     ) : (
                         <></>
                     )
-                }
+                } */}
             </div>
             {
                 data.length === 0 ? (
@@ -133,7 +135,7 @@ const LandingPage = () => {
 
                             <Link
                                 to={`/eventS/${event._id}`}
-                                className="bg-[#288CEF] h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer"
+                                className="bg-[#288CEF] h-[40px] px-3 py-3 text-white font-semibold rounded-lg cursor-pointer"
                             >
                                 Know More
                             </Link>
@@ -147,12 +149,12 @@ const LandingPage = () => {
                 role == "Admin" ? (
                     <>
                         <div className=" font-bold text-center gradient-text event_section_heading mt-[55px]  text-white">
-                            Your's Created Event
+                             Created Events
                         </div>
 
 
 
-                        <div className="flex flex-wrap  justify-center mt-2 event_section_events">
+                        <div className="flex flex-wrap  justify-center mt-2  event_section_events">
                             {events && events?.map((event, i) => {
                                 return (
                                     <div
@@ -173,7 +175,7 @@ const LandingPage = () => {
                                         </div>
                                         <div>
                                             <p className="text-gray-100 text-sm mb-4 description">
-                                                {event.eventDescription.substring(0, 240) + " ..."}
+                                                {event.eventDescription.substring(0, 150) + " ..."}
                                             </p>
                                         </div>
 
@@ -187,7 +189,7 @@ const LandingPage = () => {
                                             </div>
                                             <div
                                                 onClick={() => { sendMail(event) }}
-                                                className="bg-[#288CEF]  h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer">
+                                                className="bg-[#288CEF]  h-[40px] px-3 py-3 text-white font-semibold rounded-lg cursor-pointer">
 
                                                 Send Notifications
                                             </div>
@@ -197,6 +199,16 @@ const LandingPage = () => {
                                     </div>
                                 );
                             })}
+
+
+                             {
+                    
+
+                        <button className="create-event-button flex items-center justify-center gap-3   bg-[#288CEF]  text-white font-semibold  w-[160px] h-[40px] rounded-md font-bold  " onClick={() => navigate("create")}>
+                            <p>Create Event </p> <MdArrowForward size={20} />
+                        </button>
+                   
+                }
                         </div>
                     </>
 
