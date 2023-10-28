@@ -2,12 +2,42 @@ import "../Styles/LandingPage.css"
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md"
+import { FaEdit } from "react-icons/fa"
+import { AiOutlineDelete } from "react-icons/ai"
 import axios from "axios";
 
 const LandingPage = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [events, setevents] = useState([]);
+
+
+    const editEvent = async(event) =>
+    {
+        try
+        {
+            navigate(`/events/edit/${event._id}`);
+            // const res = await axios.post(`http://localhost:4000/api/v1/edit/${event._id}`, { withCredentials: true });
+            // window.location.reload();
+
+        }
+        catch (err)
+        {
+            console.log("error while editing event")
+        }
+    }
+    const deleteEvent = async (event) => {
+        try {
+            const res = await axios.delete(`http://localhost:4000/api/v1/delete/${event._id}`, {
+                withCredentials:true
+            });
+            window.location.reload();
+
+        }
+        catch (err) {
+            console.log("error while deleteing event")
+        }
+    }
 
     useEffect(() => {
 
@@ -47,7 +77,7 @@ const LandingPage = () => {
     const role = "Admin";
 
     return (
-        <div className=" event_section">
+        <div className=" event_section min-h-[100vh]">
             <div className="mb-[70px]">
                 {
                     role === "Admin" ? (
@@ -60,14 +90,25 @@ const LandingPage = () => {
                     )
                 }
             </div>
-            <div className=" font-bold text-center gradient-text event_section_heading mt-5  text-white">
+            {
+                data.length === 0 ? (
+                    <div className="h-[100vh] w-[100vw] flex justify-center items-center font-bold text-[40px] text-white">
+                        No event is Scheduled in college At This Moment.
+                    </div>
+                ): (
+                    <div className = " font-bold text-center gradient-text event_section_heading mt-5  text-white">
                 Upcoming Events
             </div>
+                )
+            
+            }
+            
 
 
 
             <div className="flex flex-wrap  justify-center mt-2 event_section_events">
-                {data?.map((event, i) => {
+                
+                {data.length>0 && data?.map((event, i) => {
                     return (
                         <div
                             key={i}
@@ -91,7 +132,7 @@ const LandingPage = () => {
                             </div>
 
                             <Link
-                                to={`/eventdescription/${event._id}`}
+                                to={`/eventS/${event._id}`}
                                 className="bg-[#288CEF] h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer"
                             >
                                 Know More
@@ -127,7 +168,7 @@ const LandingPage = () => {
                                             />
                                         </div>
 
-                                        <div className="font-bold text-2xl gtext my-2 text-center">
+                                        <div className="font-bold text-2xl text-white my-2 text-center">
                                             {event.eventName}
                                         </div>
                                         <div>
@@ -136,12 +177,22 @@ const LandingPage = () => {
                                             </p>
                                         </div>
 
-                                        <div
-                                            onClick={() => { sendMail(event) }}
-                                            className="bg-[#288CEF]  h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer">
+                                        
+                                        <div className="flex flex-row justify-between items-center gap-5">
+                                            <div>
+                                                 <FaEdit size={25} color="white" onClick={()=>editEvent(event)}/>
+                                            </div>
+                                            <div>
+                                                <AiOutlineDelete size={25} color="white" onClick={()=>deleteEvent(event)}/>
+                                            </div>
+                                            <div
+                                                onClick={() => { sendMail(event) }}
+                                                className="bg-[#288CEF]  h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer">
 
-                                            Send Notifications
+                                                Send Notifications
+                                            </div>
                                         </div>
+                                       
 
                                     </div>
                                 );
