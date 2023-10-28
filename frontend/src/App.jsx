@@ -8,14 +8,20 @@ import EventForm from "../src/Components/EventForm";
 import EventPage from "../src/Pages/EventPage";
 import {EuiProvider} from "@elastic/eui"
 import "@elastic/eui/dist/eui_theme_light.css"
+import EditForm from "./Components/EditForm";
 function App() {
   const route = createBrowserRouter([
     { path: "/auth", element: <AuthPage /> },
     { path: "/", element: <HomePage /> },
-    { path: "/events",children:[
-      {index:true,element:<LandingPage/>},
-      {path:"create",element:<EventForm/>},
-      {path:":id",element:<EventPage/>}
+    {
+      path: "/events", children: [
+        { index: true, element: <LandingPage /> },
+        { path: "create", element: <EventForm /> },
+        { path: ":id", element: <EventPage /> },
+        {
+          path: "edit/:id", element: <EditForm />
+        }
+      
     ]}
     ])
   return (
