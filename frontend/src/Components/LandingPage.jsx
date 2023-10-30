@@ -11,6 +11,7 @@ const LandingPage = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [events, setevents] = useState([]);
+    const [userRole,setUserRole]=useState("User");
 
 
     const editEvent = async(event) =>
@@ -18,8 +19,7 @@ const LandingPage = () => {
         try
         {
             navigate(`/events/edit/${event._id}`);
-            // const res = await axios.post(`http://localhost:4000/api/v1/edit/${event._id}`, { withCredentials: true });
-            // window.location.reload();
+           
 
         }
         catch (err)
@@ -45,6 +45,7 @@ const LandingPage = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get("http://localhost:4000/api/v1/getevents");
+                
                 setData(response.data.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -60,6 +61,7 @@ const LandingPage = () => {
                 const response = await axios.get("http://localhost:4000/api/v1/getAdmin", { withCredentials: true });
                 console.log("response", response);
                 setevents(response.data.data);
+                setUserRole(response.data.role);
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -75,22 +77,12 @@ const LandingPage = () => {
     }
 
 
-    const role = "Admin";
 
     return (
         <div className=" event_section min-h-[100vh]">
             <div className="mb-[70px]">
                 <Navbar/>
-                {/* {
-                    role === "Admin" ? (
-
-                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={() => navigate("create")}>
-                            <p>Create Event </p> <MdArrowForward size={20} />
-                        </button>
-                    ) : (
-                        <></>
-                    )
-                } */}
+             
             </div>
             {
                 data.length === 0 ? (
@@ -146,7 +138,7 @@ const LandingPage = () => {
             </div>
 
             {
-                role == "Admin" ? (
+                userRole== "Admin" ? (
                     <>
                         <div className=" font-bold text-center gradient-text event_section_heading mt-[55px]  text-white">
                              Created Events

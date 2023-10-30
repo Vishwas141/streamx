@@ -143,6 +143,7 @@ const getAdmin = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: eventDetails,
+      role:user.role
     });
   } catch (err) {
     return res.status(500).json({
@@ -216,6 +217,8 @@ const deleteEvent = async (req, res) => {
     });
   }
 };
+
+const getRole=
 
 module.exports = {
   createEvent,
