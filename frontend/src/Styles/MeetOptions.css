@@ -1,0 +1,20 @@
+.meet_nav{
+    
+    display: flex;
+    flex-direction: row;
+    gap: 10rem;
+
+}
+
+.body{
+    justify-content: center;
+}
+.meet_option_card{
+
+    background-color: gray;
+    height: 500px;
+    width: 100%;
+   margin-left:  auto ;
+   
+    
+}

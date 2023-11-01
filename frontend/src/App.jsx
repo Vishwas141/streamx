@@ -7,6 +7,7 @@ import { createBrowserRouter } from "react-router-dom";
 import EventForm from "../src/Components/EventForm";
 import EventPage from "../src/Pages/EventPage";
 import {EuiProvider} from "@elastic/eui"
+
 import Dashboard from "./Pages/Dashboard";
 import { useDispatch,useSelector } from "react-redux";
 import { EuiGlobalToastList,EuiThemeProvider } from "@elastic/eui";
@@ -52,6 +53,7 @@ function App() {
   const route = createBrowserRouter([
     { path: "/auth", element: <AuthPage /> },
     { path: "/", element: <HomePage /> },
+
     { path: "/events",children:[
       {index:true,element:<LandingPage/>},
       {path:"create",element:<EventForm/>},
@@ -65,6 +67,7 @@ function App() {
     {path:'/meetings',element:<Meeting/>},
     {path:'/join/:id',element:<JoinMeeting/>},
     { path: "*", element: <Dashboard /> },
+
     ])
   return (
     <ThemeSelector>

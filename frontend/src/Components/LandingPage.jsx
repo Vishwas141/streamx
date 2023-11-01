@@ -1,19 +1,52 @@
 import "../Styles/LandingPage.css"
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md"
+import { FaEdit } from "react-icons/fa"
+import { AiOutlineDelete } from "react-icons/ai"
 import axios from "axios";
+import Navbar from "../common/Navbar";
 
-const LandingPage = () =>
-{
+const LandingPage = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
+    const [events, setevents] = useState([]);
+    const [userRole,setUserRole]=useState("User");
+
+
+    const editEvent = async(event) =>
+    {
+        try
+        {
+            navigate(`/events/edit/${event._id}`);
+           
+
+        }
+        catch (err)
+        {
+            console.log("error while editing event")
+        }
+    }
+    const deleteEvent = async (event) => {
+        try {
+            const res = await axios.delete(`http://localhost:4000/api/v1/delete/${event._id}`, {
+                withCredentials:true
+            });
+            window.location.reload();
+
+        }
+        catch (err) {
+            console.log("error while deleteing event")
+        }
+    }
 
     useEffect(() => {
-        
+
         const fetchData = async () => {
             try {
+
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/getevents`);
+
                 setData(response.data.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -22,38 +55,55 @@ const LandingPage = () =>
 
         fetchData();
     }, []);
+    useEffect(() => {
+
 
     const sendMail = async(event) =>
     {
         const message = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/sendmail`, event);
-        console.log(message);
-    }
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:4000/api/v1/getAdmin", { withCredentials: true });
+                console.log("response", response);
+                setevents(response.data.data);
+                setUserRole(response.data.role);
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
 
-    const role = "Admin";
+
 
     return (
-        <div className=" event_section">
+        <div className=" event_section min-h-[100vh]">
             <div className="mb-[70px]">
-                {
-                    role === "Admin" ? (
-
-                        <button className="create-event-button flex items-center justify-center gap-3 bg-[#ea580c] w-[160px] h-[40px] rounded-md font-bold  " onClick={()=>navigate("create")}>
-                            <p>Create Event </p> <MdArrowForward size={20}/>
-                        </button>
-                    ) : (
-                        <></>
-                    )
-                }
+                <Navbar/>
+             
             </div>
-            <div className=" font-bold text-center gradient-text event_section_heading mt-5  text-white">
+            {
+                data.length === 0 ? (
+                    <div className="h-[100vh] w-[100vw] flex justify-center items-center font-bold text-[40px] text-white">
+                        No event is Scheduled in college At This Moment.
+                    </div>
+                ): (
+                    <div className = " font-bold text-center gradient-text event_section_heading mt-5  text-white">
                 Upcoming Events
             </div>
+                )
+            
+            }
+            
 
 
 
             <div className="flex flex-wrap  justify-center mt-2 event_section_events">
-                {data?.map((event, i) => {
+                
+                {data.length>0 && data?.map((event, i) => {
                     return (
                         <div
                             key={i}
@@ -75,30 +125,30 @@ const LandingPage = () =>
                                     {event.eventDescription.substring(0, 240) + " ..."}
                                 </p>
                             </div>
-                            
-                                <Link
-                            to={`/eventdescription/${event._id}`}
-                                    className="bg-[#288CEF] h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer"
-                                >
-                                    Know More
-                                </Link>
-                            
+
+                            <Link
+                                to={`/eventS/${event._id}`}
+                                className="bg-[#288CEF] h-[40px] px-3 py-3 text-white font-semibold rounded-lg cursor-pointer"
+                            >
+                                Know More
+                            </Link>
+
                         </div>
                     );
                 })}
             </div>
 
             {
-                role == "Admin" ? (
+                userRole== "Admin" ? (
                     <>
                         <div className=" font-bold text-center gradient-text event_section_heading mt-[55px]  text-white">
-                            Your's Created Event
+                             Created Events
                         </div>
 
 
 
-                        <div className="flex flex-wrap  justify-center mt-2 event_section_events">
-                            {data.map((event, i) => {
+                        <div className="flex flex-wrap  justify-center mt-2  event_section_events">
+                            {events && events?.map((event, i) => {
                                 return (
                                     <div
                                         key={i}
@@ -113,35 +163,55 @@ const LandingPage = () =>
                                             />
                                         </div>
 
-                                        <div className="font-bold text-2xl gtext my-2 text-center">
+                                        <div className="font-bold text-2xl text-white my-2 text-center">
                                             {event.eventName}
                                         </div>
                                         <div>
                                             <p className="text-gray-100 text-sm mb-4 description">
-                                                {event.eventDescription.substring(0, 240) + " ..."}
+                                                {event.eventDescription.substring(0, 150) + " ..."}
                                             </p>
                                         </div>
 
-                                        <div
-                                            onClick={() => { sendMail(event) }}
-                                            className="bg-[#288CEF]  h-[40px] px-3 py-2 text-white font-semibold rounded-lg cursor-pointer">
                                         
-                                            Send Notifications
+                                        <div className="flex flex-row justify-between items-center gap-5">
+                                            <div>
+                                                 <FaEdit size={25} color="white" onClick={()=>editEvent(event)}/>
+                                            </div>
+                                            <div>
+                                                <AiOutlineDelete size={25} color="white" onClick={()=>deleteEvent(event)}/>
+                                            </div>
+                                            <div
+                                                onClick={() => { sendMail(event) }}
+                                                className="bg-[#288CEF]  h-[40px] px-3 py-3 text-white font-semibold rounded-lg cursor-pointer">
+
+                                                Send Notifications
+                                            </div>
                                         </div>
+                                       
 
                                     </div>
                                 );
                             })}
+
+
+                             {
+                    
+
+                        <button className="create-event-button flex items-center justify-center gap-3   bg-[#288CEF]  text-white font-semibold  w-[160px] h-[40px] rounded-md font-bold  " onClick={() => navigate("create")}>
+                            <p>Create Event </p> <MdArrowForward size={20} />
+                        </button>
+                   
+                }
                         </div>
                     </>
-          
-            
-            ):(
-                        <>
-                           
-                        </>
+
+
+                ) : (
+                    <>
+
+                    </>
                 )
-            
+
             }
         </div>
     );

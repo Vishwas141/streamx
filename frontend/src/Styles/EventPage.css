@@ -1,6 +1,10 @@
-/* EventPage.css */
+/* EventPage.css #1d1e24  hsl(231,11%,13%)rgb(29,30,36) */
+
+.bg{
+  background: radial-gradient(circle, #191F6B, black);
+}
 .event-page {
-  background: #000;
+  
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
@@ -17,7 +21,7 @@
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   margin-top: 20px;
   font-weight: 600;
-  color: #f47a41; /* Text color */
+  color: #fff; /* Text color */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow effect */
   letter-spacing: 2px; /* Adjust letter spacing */
   transition: transform 0.2s ease-in-out;
@@ -53,16 +57,22 @@
   flex-direction: column;
   gap: 20px;
   align-items: center;
-  width: 350px; /* Adjust the width */
-  height: 450px; /* Adjust the height */
-  background: #222;
-  color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adjust the shadow properties */
-  padding: 20px;
-  border: 2px solid #fff; /* Add a border */
+  width: 370px; /* Adjust the width */
+  height: 500px; /* Adjust the height */
+  background: radial-gradient(circle, #191F6B, transparent); /* Blueish radial gradient */
+  font-weight: 800;
+  color: #fff; /* Text color remains at 100% opacity */
+  box-shadow: 0 0 10px 10px rgba(245, 245, 245, 0.2); /* Add blur radius for blurry border */
+  padding: 50px;
+ 
   border-radius: 10px;
   transition: transform 0.2s ease-in-out;
+  font-size: 20px;
+  border-radius: 20px; /* Add border-radius to round the shadow */
 }
+
+
+
 
 .event-info-card:hover {
   transform: scale(1.05); /* Hover effect to scale the card */
@@ -87,22 +97,6 @@
 
 .event-description {
   margin-top: 20px;
-}
-
-.footer {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  width:100%;
-  padding-left: 80px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  
-}
-.footer {
-  background: #333; /* Change this color to your desired background color */
-
 }
 
 .phone-icon, .email-icon {
