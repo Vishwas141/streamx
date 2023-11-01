@@ -44,8 +44,9 @@ const LandingPage = () => {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/api/v1/getevents");
-                
+
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/getevents`);
+
                 setData(response.data.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -56,6 +57,10 @@ const LandingPage = () => {
     }, []);
     useEffect(() => {
 
+
+    const sendMail = async(event) =>
+    {
+        const message = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/sendmail`, event);
         const fetchData = async () => {
             try {
                 const response = await axios.get("http://localhost:4000/api/v1/getAdmin", { withCredentials: true });
@@ -71,10 +76,6 @@ const LandingPage = () => {
         fetchData();
     }, []);
 
-    const sendMail = async (event) => {
-        const message = await axios.post("http://localhost:4000/api/v1/sendmail", event);
-        console.log(message);
-    }
 
 
 

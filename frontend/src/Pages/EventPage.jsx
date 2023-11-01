@@ -27,7 +27,7 @@ const EventPage = () => {
   {
     const fetchData = async () =>
     {
-      const res= await axios.get(`http://localhost:4000/api/v1/getsingleevent/${id}`);
+      const res= await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/getsingleevent/${id}`);
       console.log(res.data);
       setEvent(res.data.data);
     }

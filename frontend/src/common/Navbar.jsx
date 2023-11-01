@@ -24,13 +24,13 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="brand">
-        <div className="brand-name">STREAMX</div>
+        <div className="brand-name">StreamX</div>
       </div>
       <div className="nav-links">
         <Link to={(userLoggedIn)?"/events":"/auth"}>
           <div className='menu'>Events</div>
         </Link>
-        <Link to={(userLoggedIn)?"/":"/auth"}>
+        <Link to={(userLoggedIn)?"/meetsection":"/auth"}>
           <div className='menu'>Meet</div>
         </Link>
         <div className="user-section">
