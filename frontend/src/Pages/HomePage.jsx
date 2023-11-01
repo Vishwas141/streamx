@@ -31,7 +31,7 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    const res=axios.get("http://localhost:4000/user/validate",{withCredentials:true})
+    const res=axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/validate`,{withCredentials:true})
     res
       .then((res) => {
         // console.log(res.data)

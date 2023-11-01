@@ -48,7 +48,7 @@ const EventForm = () =>
     if (validateForm()) {
       console.log(formValues);
       try {
-        const response = await axios.post("http://localhost:4000/api/v1/create_event", formValues, {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/create_event`, formValues, {
           headers: {
             'Content-Type': 'multipart/form-data', // Set the appropriate content type for file uploads
           },
