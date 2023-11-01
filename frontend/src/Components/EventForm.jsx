@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import '../Styles/EventForm.css';
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom";
@@ -8,8 +8,7 @@ import { toast } from 'react-toastify';
 
 
 
-const EventForm = () =>
-{
+const EventForm = () => {
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     eventName: '',
@@ -17,7 +16,7 @@ const EventForm = () =>
     registrationLink: '',
     registrationDate: '',
     closingDate: '',
-    venue: '',  
+    venue: '',
     organisation: '',
     modeOfConduction: '',
     errors: {},
@@ -43,15 +42,16 @@ const EventForm = () =>
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       console.log(formValues);
       try {
-        const response = await axios.post("http://localhost:4000/api/v1/create_event", formValues, {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/create_event`, formValues, {
           headers: {
             'Content-Type': 'multipart/form-data', // Set the appropriate content type for file uploads
           },
+          withCredentials: true, // Include cookies in the request
         });
 
         console.log(response.data); // Handle the response as needed
@@ -189,7 +189,7 @@ const EventForm = () =>
               <p className="error">{formValues.errors.organisation}</p>
             )}
           </div>
-         
+
           <div className="form-group">
             <label htmlFor="modeOfConduction">Mode of Conduction *</label>
             <input

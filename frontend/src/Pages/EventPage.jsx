@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Navbar from '../common/Navbar'
 import '../Styles/EventPage.css';
 import { MdArrowForward } from "react-icons/md"
 import { Link } from 'react-router-dom';
@@ -26,15 +27,16 @@ const EventPage = () => {
   {
     const fetchData = async () =>
     {
-      const res= await axios.get(`http://localhost:4000/api/v1/getsingleevent/${id}`);
+      const res= await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/getsingleevent/${id}`);
       console.log(res.data);
       setEvent(res.data.data);
     }
     fetchData();
-
   },[id])
 
   return (
+<div className='bg'> 
+<Navbar/>
     <div className="event-page">
       <h1 className="event-name">{event?.eventName}</h1>
       <div className="poster-section">
@@ -43,7 +45,7 @@ const EventPage = () => {
           <div className='h-[50px]'>
 
 
-            <p>Registartion Date :</p>
+            <p>Registration Date :</p>
 
             {formatDate(event?.registrationDate)}
           </div>
@@ -70,37 +72,24 @@ const EventPage = () => {
           </div>
           
           <Link to="https://www.facebook.com/">
-            <button className=" flex items-center mt-[20px] justify-center bg-[#ea580c] w-[160px] h-[40px] rounded-md  " onClick={() => navigate("/registerevent")}>
-              <p>Regsiter Now</p> <MdArrowForward size={20} />
+            <button className=" flex items-center mt-[20px] justify-center text-white  bg-[#288CEF]  w-[160px] h-[40px] rounded-md  " onClick={() => navigate("/registerevent")}>
+              <p>Register Now</p> <MdArrowForward size={20} />
             </button>
           </Link>
         
         </div>
       </div>
-      <div className="event-description">
-        <h2 className='text-orange text-[35px] mt-[20px] font-bold '>About Us</h2>
+     <div className="event-description"> 
+        <h2 className='text-white text-[35px] mt-[20px] font-bold '>About Us</h2>
         <p>{event?.eventDescription}</p>
-      </div>
+      </div> 
+      
 
       <div className='text-[30px] mt-7 font-bold'>
-          Organized By :<p className='text-[25px] font-semibold'>Student Association Of Technology ,Sangli .</p>
+          Organized By :<p className='text-[25px] font-semibold'>{event?.organisation}</p>
       </div>
-      <div className="footer flex flex-column rounded-md ">
-        
-          
-          <div className="flex ">
-            <div className="phone-icon">📞</div>
-            <p>Contact: +1 (123) 456-7890</p>
-          </div>
-          <div className='flex'>
-            <div className="email-icon">📧</div>
-            <p>Email: contact@example.com</p>
-          </div>
-          
-         
-      </div>
-
     </div>
+    </div>    
   );
 };
 

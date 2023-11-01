@@ -3,3 +3,13 @@
   margin:0px;
   overflow-x: hidden;
 }
+body{
+  scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+a{
+  text-decoration: none;
+}

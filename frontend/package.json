@@ -10,13 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@elastic/datemath": "^5.0.3",
     "@elastic/eui": "^89.1.0",
+    "@emotion/css": "^11.11.2",
+    "@emotion/react": "^11.11.1",
     "@reduxjs/toolkit": "^1.9.7",
+    "@zegocloud/zego-uikit-prebuilt": "^1.8.11",
     "axios": "^1.5.1",
     "cloudinary": "^1.41.0",
     "express-fileupload": "^1.4.1",
     "lottie-web": "^5.12.2",
+    "moment": "^2.29.4",
     "node": "^20.7.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
@@ -33,6 +39,6 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "vite": "^4.4.5"
+    "vite": "^4.5.0"
   }
 }

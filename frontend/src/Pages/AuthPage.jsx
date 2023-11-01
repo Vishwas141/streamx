@@ -3,9 +3,11 @@ import '../Styles/Auth.css';
 import { toast } from 'react-toastify'; // Import toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from "react-router-dom"
+import { useDispatch } from 'react-redux';
 import axios from "axios";
 function AuthPage() {
     const [isSignIn, setIsSignIn] = useState(true);
+    const dispatch = useDispatch();
     const [signUpData, setSignUpData] = useState({
         username: '',
         email: '',
@@ -74,7 +76,8 @@ function AuthPage() {
         console.log('Sign-up data:', signUpData);
 
         try{
-            const res=await axios.post("http://localhost:4000/user/register",{name:signUpData.username,email:signUpData.email,password:signUpData.password},{withCredentials:true});
+            // dispatch(setUser({name:signUpData.username,email:signUpData.email,password:signUpData.password}));
+            const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/register`,{name:signUpData.username,email:signUpData.email,password:signUpData.password},{withCredentials:true});
             if(!res.status===200){
                 throw new Error("Error while registering");
             }
@@ -101,16 +104,18 @@ function AuthPage() {
             return;
         }
         // Handle sign-in logic (replace this with your actual logic)
-        console.log('Sign-in data:', signInData);
+        // console.log('Sign-in data:', signInData);
         try{
-            const res=await axios.post("http://localhost:4000/user/login",{email:signInData.email,password:signInData.password},{withCredentials:true});
-            console.log(res.data)
-            localStorage.setItem("email",signInData.email)
+            const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`,{email:signInData.email,password:signInData.password},{withCredentials:true});
+            // const user={...res.data.user,password:signInData.password};
             if(!res.status===200){
                 throw new Error("Error while logging in");
             }
-
-            toast.success('Sign-in successful');
+            
+            // dispatch(setUser(res));
+            localStorage.setItem("uid",res.data.user._id)
+            localStorage.setItem("email",signInData.email)
+            localStorage.setItem("name",res.data.user.name)
 
             navigate("/");
         }

@@ -1,7 +1,7 @@
 const userModel = require('../models/UserSchema');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const meetingModel=require('../models/MeetingSchema');
 //encrypt password before saving
 const encryptPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -35,7 +35,7 @@ const Register = async (req, res) => {
 const Login = async (req, res) => {
     try {   
         const currentUser = await userModel.findOne({ email: req.body.email });
-        console.log(currentUser);
+        // console.log(currentUser);
         if (currentUser) {
             const isPasswordCorrect = bcrypt.compareSync(
                 req.body.password,
@@ -51,7 +51,7 @@ const Login = async (req, res) => {
                     httpOnly: false,
                     maxAge: 24 * 60 * 60 * 1000
                   });
-                res.status(200).json({ message: "User Logged In", token });
+                res.status(200).json({user:currentUser,message: "User Logged In", token });
             } else {
                 res.status(400).json({ message: "Password is Incorrect" });
             }
@@ -90,5 +90,139 @@ const Validate = async (req,res) =>
         res.status(400).json({ message: err.message });
     }
 }
+const filterUser = (user) => {
+    const { password, __v,events,role, ...filteredUser } = user;
+    return filteredUser;
+}
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.find();
+        const filteredUsers = users.map((user) => filterUser(user._doc));
+        return res.status(200).json({
+            success: true,
+            data: filteredUsers
+        })
+    }
+    catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
 
-module.exports = { Register, Login ,Validate};
+const postMeetings=async(req,res)=>{
+    try{
+        const {createdBy,meetingid,meetingName,meetingType,invitedUsers,meetingDate,maxUsers,meetingStatus}=req.body;
+        const meeting=await meetingModel.create({
+            createdBy,
+            meetingid,
+            meetingName,
+            meetingType,
+            invitedUsers,
+            meetingDate,
+            maxUsers,
+            meetingStatus,
+        });
+        return res.status(201).json({
+            success:true,
+            message:"Meeting created successfully",
+            data:meeting,
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:err.message,
+        })
+    }
+}
+
+const getById=async(req,res)=>{
+    try{
+        // console.log(req.params.id)
+        const meeting=await meetingModel.find({createdBy:req.params.id});
+        if(!meeting){
+            return res.status(404).json({
+                success:false,
+                message:"Meeting not found",
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            data:meeting,
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:err.message,
+        })
+    }
+}
+
+const patchById=async(req,res)=>{
+    const id=req.params.id;
+    const meeting=req.body;
+    console.log(meeting)
+    try{
+        const data=await meetingModel.updateOne({meetingid:id},meeting)
+        if(!data){
+            return res.status(404).json({
+                success:false,
+                message:"Meeting not found",
+            })
+        }
+        // console.log(data)
+        return res.status(200).json({
+            success:true,
+            message:"Meeting updated successfully",
+            data:data,
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:err.message,
+        })
+    }
+}
+
+const getByMeetId= async(req,res)=>{
+    try{
+        const meeting=await meetingModel.findOne({meetingid:req.params.id});
+        if(!meeting){
+            return res.status(404).json({
+                success:false,
+                message:"Meeting not found",
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            data:meeting,
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:err.message,
+        })
+    }
+}
+const getInviteMeetings = async (req, res) => {
+    try {
+      const { id } = req.params; // Assuming you get the 'id' from the request parameters
+        // console.log(id)
+      // Find meetings where the 'invitedUsers' array contains the specified 'id'
+      const meetings = await meetingModel.find({
+        invitedUsers: { $in: [id] }
+      });
+    //   console.log(meetings)
+      res.json({ data: meetings });
+    } catch (error) {
+    //   console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
+module.exports = { Register, Login ,Validate,getAllUsers,postMeetings,getById,patchById,getByMeetId,getInviteMeetings};
