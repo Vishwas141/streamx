@@ -29,7 +29,7 @@ const LandingPage = () => {
     }
     const deleteEvent = async (event) => {
         try {
-            const res = await axios.delete(`http://localhost:4000/api/v1/delete/${event._id}`, {
+            const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/delete/${event._id}`, {
                 withCredentials:true
             });
             window.location.reload();
@@ -63,7 +63,7 @@ const LandingPage = () => {
         const message = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/sendmail`, event);
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/api/v1/getAdmin", { withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/getAdmin`, { withCredentials: true });
                 console.log("response", response);
                 setevents(response.data.data);
                 setUserRole(response.data.role);
@@ -72,7 +72,7 @@ const LandingPage = () => {
                 console.error("Error fetching data:", error);
             }
         };
-
+    }
         fetchData();
     }, []);
 
