@@ -48,6 +48,10 @@ const LandingPage = () => {
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/getevents`);
 
                 setData(response.data.data);
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/getAdmin`,{withCredentials:true});
+
+                setUserRole(res.data.role)
+                setevents(res.data.data)
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

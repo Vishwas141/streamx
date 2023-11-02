@@ -7,7 +7,7 @@ import { createBrowserRouter } from "react-router-dom";
 import EventForm from "../src/Components/EventForm";
 import EventPage from "../src/Pages/EventPage";
 import {EuiProvider} from "@elastic/eui"
-
+import EditForm from "./Components/EditForm";
 import Dashboard from "./Pages/Dashboard";
 import { useDispatch,useSelector } from "react-redux";
 import { EuiGlobalToastList,EuiThemeProvider } from "@elastic/eui";
@@ -59,6 +59,7 @@ function App() {
       {path:"create",element:<EventForm/>},
       {path:":id",element:<EventPage/>}
     ]},
+    {path:'/events/edit/:id',element:<EditForm/>},
     {path:'/meetsection',element:<Dashboard/>},
     {path:'/createmeet',element:<CreateMeeting/>},
     {path:'/create1on1',element:<OneOnOneMeeting/>},
