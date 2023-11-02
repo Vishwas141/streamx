@@ -55,8 +55,6 @@ const LandingPage = () => {
 
         fetchData();
     }, []);
-    useEffect(() => {
-
 
     const sendMail = async(event) =>
     {
@@ -73,8 +71,7 @@ const LandingPage = () => {
             }
         };
     }
-        fetchData();
-    }, []);
+
 
 
 
