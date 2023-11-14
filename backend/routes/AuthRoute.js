@@ -1,9 +1,8 @@
-const {Register,Login,Validate,getAllUsers,postMeetings,getById,patchById,getByMeetId,getInviteMeetings}=require('../controllers/AuthController');
+const {Register,Login,getAllUsers,postMeetings,getById,patchById,getByMeetId,getInviteMeetings}=require('../controllers/AuthController');
 const router=require('express').Router();
 
 router.route('/register').post(Register);
 router.route('/login').post(Login);
-router.get('/validate', Validate);
 router.route('/all').get(getAllUsers);
 router.route('/meetings')
 .post(postMeetings)

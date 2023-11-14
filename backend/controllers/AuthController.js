@@ -2,6 +2,7 @@ const userModel = require('../models/UserSchema');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const meetingModel=require('../models/MeetingSchema');
+const { validate } = require('../models/EventSchema');
 //encrypt password before saving
 const encryptPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -87,7 +88,7 @@ const Validate = async (req,res) =>
         res.status(200).json({message:"Valid User"})
         }
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ message: "undefined behaviour" });
     }
 }
 const filterUser = (user) => {
@@ -113,6 +114,7 @@ const getAllUsers = async (req, res) => {
 
 const postMeetings=async(req,res)=>{
     try{
+        await validate(req,res)
         const {createdBy,meetingid,meetingName,meetingType,invitedUsers,meetingDate,maxUsers,meetingStatus}=req.body;
         const meeting=await meetingModel.create({
             createdBy,
@@ -140,6 +142,7 @@ const postMeetings=async(req,res)=>{
 
 const getById=async(req,res)=>{
     try{
+        await validate(req,res)
         // console.log(req.params.id)
         const meeting=await meetingModel.find({createdBy:req.params.id});
         if(!meeting){
@@ -166,6 +169,7 @@ const patchById=async(req,res)=>{
     const meeting=req.body;
     console.log(meeting)
     try{
+        await validate(req,res)
         const data=await meetingModel.updateOne({meetingid:id},meeting)
         if(!data){
             return res.status(404).json({
@@ -190,6 +194,7 @@ const patchById=async(req,res)=>{
 
 const getByMeetId= async(req,res)=>{
     try{
+        await validate(req,res)
         const meeting=await meetingModel.findOne({meetingid:req.params.id});
         if(!meeting){
             return res.status(404).json({
@@ -211,6 +216,7 @@ const getByMeetId= async(req,res)=>{
 }
 const getInviteMeetings = async (req, res) => {
     try {
+      await validate(req, res);
       const { id } = req.params; // Assuming you get the 'id' from the request parameters
         // console.log(id)
       // Find meetings where the 'invitedUsers' array contains the specified 'id'
@@ -225,4 +231,4 @@ const getInviteMeetings = async (req, res) => {
     }
   };
   
-module.exports = { Register, Login ,Validate,getAllUsers,postMeetings,getById,patchById,getByMeetId,getInviteMeetings};
+module.exports = { Register, Login ,getAllUsers,postMeetings,getById,patchById,getByMeetId,getInviteMeetings};

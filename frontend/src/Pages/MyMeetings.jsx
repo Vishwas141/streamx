@@ -10,7 +10,7 @@ import {
 import axios from "axios";
   import moment from "moment";
   import React, { useEffect, useState, useCallback } from "react";
-  import { Link } from "react-router-dom";
+  import { Link,useNavigate } from "react-router-dom";
   import { useSelector } from "react-redux";
   import EditFlyout from "../Components/meet/EditFlyout";
   import Header from "../Components/meet/Header";
@@ -18,6 +18,7 @@ import axios from "axios";
   export default function MyMeetings() {
     // useAuth();
     const uid=localStorage.getItem("uid");
+    const navigate=useNavigate()
     const [meetings, setMeetings] = useState([]);
     const [showEditFlyout, setShowEditFlyout] = useState(false);
     const [editMeeting, setEditMeeting] = useState();
@@ -42,6 +43,9 @@ import axios from "axios";
         }
         catch(err){
             console.log(err)
+            if(err.message==="undefined behaviour"){
+              navigate("/auth")
+            }
         }
     }, [uid]);
     console.log(meetings)

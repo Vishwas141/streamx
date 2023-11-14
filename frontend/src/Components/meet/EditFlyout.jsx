@@ -13,6 +13,7 @@ import {
   import useFetchUsers from "../../hooks/useFetchUsers";
   import useToast from "../../hooks/useToast";
   import axios from 'axios'
+  import { useNavigate } from "react-router-dom";
   import CreateMeetingButtons from "./FormComponents/CreateMeetingButtons";
   import MeetingDateField from "./FormComponents/MeetingDateField";
   import MeetingMaximumUsersField from "./FormComponents/MeetingMaximumUsersField";
@@ -36,7 +37,7 @@ import {
     const onUserChange = (selectedOptions) => {
       setSelectedUser(selectedOptions);
     };
-  
+  const navigate=useNavigate()
     useEffect(() => {
       if (users) {
         const foundUsers = [];
@@ -89,6 +90,9 @@ import {
       }
       catch(err){
         console.log(err)
+        if(err.message==="undefined behaviour"){
+          navigate("/auth")
+        }
         createToast({ title: "Meeting updated failed.", type: "danger" });
       }
     };

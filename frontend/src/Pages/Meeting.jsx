@@ -8,22 +8,16 @@ import {
     EuiPanel,
   } from "@elastic/eui";
   import axios from 'axios'
-//   import { getDocs, query } from "firebase/firestore";
   import moment from "moment";
   import React, { useEffect, useState,useCallback } from "react";
-  import { Link } from "react-router-dom";
-//   import { useAppSelector } from "../app/hooks";
+  import { Link,useNavigate } from "react-router-dom";
   import Header from "../Components/meet/Header";
-//   import useAuth from "../hooks/useAuth";
-  
-//   import { meetingsRef } from "../utils/firebaseConfig";
-//   import { MeetingType } from "../utils/types";
   
   export default function Meeting() {
     // useAuth();
     const uid = localStorage.getItem("uid");
     const [meetings, setMeetings] = useState([]);
-  
+    const navigate=useNavigate()
     const getMyMeetings = useCallback(async () => {
       try{
       const res=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/invitemeetings/${uid}`)
@@ -45,6 +39,9 @@ import {
       }
       catch(err){
           console.log(err)
+          if(err.message==="undefined behavior"){
+            navigate("/auth")
+          }
       }
   }, [uid]);
   console.log(meetings)

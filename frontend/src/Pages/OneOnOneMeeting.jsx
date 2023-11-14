@@ -78,6 +78,9 @@ export default function OneOnOneMeeting() {
       }
       catch(err){
         console.log(err)
+        if(err.message==="undefined behaviour"){
+          navigate("/auth")
+        }
       }
       createToast({
         title: "One on One Meeting Created Successfully",

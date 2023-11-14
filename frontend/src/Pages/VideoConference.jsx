@@ -91,6 +91,9 @@ import {
           }
           catch(err){
             console.log(err)
+            if(err.message==="undefined behaviour"){
+              navigate("/auth")
+            }
           }
         createToast({
           title: anyoneCanJoin

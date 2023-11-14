@@ -32,6 +32,9 @@ export default function JoinMeeting() {
         }
         catch(err){
             console.log(err)
+            if(err.message==="undefined behaviour"){
+              navigate("/auth")
+            }
         }
           if (fetchedMeetings) {
             const meeting = fetchedMeetings;
