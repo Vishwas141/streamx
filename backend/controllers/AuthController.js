@@ -114,7 +114,6 @@ const getAllUsers = async (req, res) => {
 
 const postMeetings=async(req,res)=>{
     try{
-        await validate(req,res)
         const {createdBy,meetingid,meetingName,meetingType,invitedUsers,meetingDate,maxUsers,meetingStatus}=req.body;
         const meeting=await meetingModel.create({
             createdBy,
@@ -142,7 +141,6 @@ const postMeetings=async(req,res)=>{
 
 const getById=async(req,res)=>{
     try{
-        await validate(req,res)
         // console.log(req.params.id)
         const meeting=await meetingModel.find({createdBy:req.params.id});
         if(!meeting){
@@ -169,7 +167,6 @@ const patchById=async(req,res)=>{
     const meeting=req.body;
     console.log(meeting)
     try{
-        await validate(req,res)
         const data=await meetingModel.updateOne({meetingid:id},meeting)
         if(!data){
             return res.status(404).json({
@@ -194,7 +191,6 @@ const patchById=async(req,res)=>{
 
 const getByMeetId= async(req,res)=>{
     try{
-        await validate(req,res)
         const meeting=await meetingModel.findOne({meetingid:req.params.id});
         if(!meeting){
             return res.status(404).json({
@@ -216,7 +212,6 @@ const getByMeetId= async(req,res)=>{
 }
 const getInviteMeetings = async (req, res) => {
     try {
-      await validate(req, res);
       const { id } = req.params; // Assuming you get the 'id' from the request parameters
         // console.log(id)
       // Find meetings where the 'invitedUsers' array contains the specified 'id'
