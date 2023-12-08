@@ -130,7 +130,7 @@ import axios from "axios";
         render: (meetingid) => {
           return (
             <EuiCopy
-              textToCopy={`${import.meta.env.VITE_BACKEND_URL}/join/${meetingid}`}
+              textToCopy={`https://streamx1.netlify.app/join/${meetingid}`}
             >
               {(copy) => (
                 <EuiButtonIcon
